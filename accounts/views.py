@@ -45,7 +45,7 @@ def update_view(request, id):
     return render(request, 'accounts/update.html', {'crud':crud})
 
 
-def delete(request, id):
+def delete_view(request, id):
     crud = get_object_or_404(CRUD, id=id)
     crud.delete()
     messages.success(request, "Deleted succssfully")

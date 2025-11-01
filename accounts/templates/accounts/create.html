@@ -1,8 +1,74 @@
-<form action="" method="post">
-    {% csrf_token %}
-    <input type="text" name="name" placeholder="Enter name">
-    <textarea name="message" id="" placeholder="enter message ..."></textarea>
-    <button type="submit">Submit</button>
-</form>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create CRUD</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
 
-<a href="{% url 'read' %}">read view</a>
+<div class="container py-5">
+    <h2 class="text-center mb-4">Create & List CRUD Data</h2>
+
+    <!-- Django Messages -->
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Create Form -->
+    <form method="POST" class="card p-4 shadow-sm mb-4 bg-white">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name">
+        </div>
+        <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea name="message" id="message" rows="3" class="form-control" placeholder="Enter message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Add</button>
+    </form>
+
+    <!-- List of CRUD Data -->
+    <div class="card shadow-sm p-3 bg-white">
+        <h4 class="mb-3">All Entries</h4>
+        {% if cruds %}
+            <table class="table table-striped table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Message</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in cruds %}
+                    <tr>
+                        <td>{{ c.id }}</td>
+                        <td>{{ c.name }}</td>
+                        <td>{{ c.message }}</td>
+                        <td>{{ c.created_at|date:"Y-m-d H:i" }}</td>
+                        <td>
+                            <a href="{% url 'update' c.id %}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{% url 'delete' c.id %}" class="btn btn-sm btn-danger"
+                               onclick="return confirm('Are you sure you want to delete this?')">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-muted">No data yet.</p>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

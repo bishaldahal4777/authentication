@@ -43,3 +43,10 @@ def update_view(request, id):
             messages.success(request, "Successfully updated ")
             return redirect('create')
     return render(request, 'accounts/update.html', {'crud':crud})
+
+
+def delete(request, id):
+    crud = get_object_or_404(CRUD, id=id)
+    crud.delete()
+    messages.success(request, "Deleted succssfully")
+    return redirect('create')

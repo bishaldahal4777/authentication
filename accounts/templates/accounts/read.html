@@ -1,0 +1,14 @@
+{% comment %} {% if CRUD %} {% endcomment %}
+<ul>
+    {% for x in CRUD %}
+<li>
+   <strong>{{x.name}}</strong> <small>{{x.message}}</small>
+</li>
+
+    {% endfor %}
+</ul>
+
+<a href="{% url 'create'%}">create</a>
+
+{% comment %} {% endif %} {% endcomment %}
+

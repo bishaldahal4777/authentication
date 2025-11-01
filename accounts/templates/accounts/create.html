@@ -1,0 +1,8 @@
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Enter name">
+    <textarea name="message" id="" placeholder="enter message ..."></textarea>
+    <button type="submit">Submit</button>
+</form>
+
+<a href="{% url 'read' %}">read view</a>
